@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>rh downloader</title>
+<link rel="stylesheet" href="css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+    <div id="drawer-backdrop" class="drawer-backdrop"></div>
+    <aside id="drawer" class="drawer">
+        <div class="drawer-head">
+            <div class="drawer-logo"><i class="fa-solid fa-arrow-down"></i></div>
+            <div>
+                <div class="drawer-title">rh downloader</div>
+                <div class="drawer-subtitle">tiktok + youtube</div>
+            </div>
+        </div>
+        <button class="drawer-item active" data-page="page-home"><i class="fa-solid fa-house"></i><span>download</span></button>
+        <button class="drawer-item" data-page="page-media"><i class="fa-solid fa-photo-film"></i><span>media</span></button>
+        <button class="drawer-item" data-page="page-settings"><i class="fa-solid fa-sliders"></i><span>background</span></button>
+        <div class="drawer-line"></div>
+        <button class="drawer-item" id="btn-drawer-theme"><i class="fa-solid fa-moon"></i><span>mode gelap</span><span class="drawer-state" id="theme-state">off</span></button>
+    </aside>
+
+    <section id="page-home" class="page active">
+        <header class="topbar">
+            <button class="icon-btn" id="btn-menu"><i class="fa-solid fa-bars"></i></button>
+            <div class="top-title-wrap">
+                <div class="top-title">rh downloader</div>
+                <div class="top-subtitle" id="home-platform-label">tiktok + youtube</div>
+            </div>
+            <button class="icon-btn" id="btn-home-media"><i class="fa-solid fa-folder"></i></button>
+        </header>
+
+        <main class="home-content">
+            <div class="hero">
+                <div class="platform-icon" id="home-platform-icon"><i class="fa-brands fa-tiktok"></i></div>
+                <div>
+                    <div class="hero-title" id="hero-title">download tiktok</div>
+                    <div class="hero-subtitle" id="hero-subtitle">tempel link, lalu download</div>
+                </div>
+            </div>
+
+            <div class="url-card">
+                <div class="url-label-row">
+                    <span>link media</span>
+                    <button class="mini-btn" id="btn-paste"><i class="fa-solid fa-paste"></i> paste</button>
+                </div>
+                <textarea id="input-url" spellcheck="false" placeholder="https://www.tiktok.com/... atau youtube.com/..." autocomplete="off"></textarea>
+                <button class="download-main" id="btn-download">
+                    <span class="download-icon"><i class="fa-solid fa-arrow-down"></i></span>
+                    <span class="download-text">download sekarang</span>
+                    <span class="download-loading hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                </button>
+            </div>
+
+            <div class="quick-card" id="btn-quick-background">
+                <div class="quick-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div class="quick-main">
+                    <div class="quick-title">download dari luar aplikasi</div>
+                    <div class="quick-sub" id="quick-background-status">atur popup atau notifikasi di background</div>
+                </div>
+                <i class="fa-solid fa-chevron-right quick-arrow"></i>
+            </div>
+
+            <div id="status-box" class="status hidden"></div>
+            <div id="result-box" class="result hidden">
+                <div class="result-head">
+                    <div>
+                        <div class="result-kicker">hasil download</div>
+                        <div class="result-title" id="result-title">selesai</div>
+                    </div>
+                    <i class="fa-solid fa-circle-check result-ok"></i>
+                </div>
+                <div id="result-meta" class="result-meta"></div>
+                <div id="result-files" class="result-files"></div>
+            </div>
+        </main>
+    </section>
+
+    <section id="page-media" class="page">
+        <header class="topbar">
+            <button class="icon-btn" id="btn-media-menu"><i class="fa-solid fa-bars"></i></button>
+            <div class="top-title-wrap">
+                <div class="top-title">media</div>
+                <div class="top-subtitle">hasil download</div>
+            </div>
+            <button class="icon-btn" id="btn-refresh-media"><i class="fa-solid fa-rotate"></i></button>
+        </header>
+
+        <div class="media-platform-tabs" id="media-platform-tabs">
+            <button class="media-platform-tab active" data-platform="Youtube"><i class="fa-brands fa-youtube"></i> youtube</button>
+            <button class="media-platform-tab" data-platform="Tiktok"><i class="fa-brands fa-tiktok"></i> tiktok</button>
+        </div>
+
+        <div class="media-tabs" id="media-tabs">
+            <button class="media-tab active" data-tab="audio"><i class="fa-solid fa-music"></i> audio</button>
+            <button class="media-tab" data-tab="video"><i class="fa-solid fa-video"></i> video</button>
+            <button class="media-tab" data-tab="foto" id="tab-foto"><i class="fa-solid fa-image"></i> foto</button>
+        </div>
+
+        <div class="media-toolbar">
+            <div class="media-count" id="media-count">0 file</div>
+            <button class="select-toggle" id="btn-select-mode"><i class="fa-solid fa-check-double"></i> pilih</button>
+        </div>
+
+        <main class="media-content" id="media-list-content">
+            <div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i><span>memuat...</span></div>
+        </main>
+
+        <div class="select-bar hidden" id="select-bar">
+            <button id="btn-select-all"><i class="fa-solid fa-list-check"></i> semua</button>
+            <button id="btn-delete-selected" class="danger"><i class="fa-solid fa-trash"></i> hapus terpilih</button>
+        </div>
+    </section>
+
+    <section id="page-preview" class="page">
+        <header class="topbar">
+            <button class="icon-btn" id="back-from-preview"><i class="fa-solid fa-arrow-left"></i></button>
+            <div class="top-title-wrap">
+                <div class="top-title" id="preview-title">preview</div>
+                <div class="top-subtitle">media</div>
+            </div>
+            <button class="icon-btn" id="btn-share-preview"><i class="fa-solid fa-share-nodes"></i></button>
+        </header>
+        <main class="preview-container" id="preview-content"></main>
+    </section>
+
+    <section id="page-settings" class="page">
+        <header class="topbar">
+            <button class="icon-btn" id="btn-settings-menu"><i class="fa-solid fa-bars"></i></button>
+            <div class="top-title-wrap">
+                <div class="top-title">background</div>
+                <div class="top-subtitle">download tanpa buka aplikasi</div>
+            </div>
+            <span class="service-dot" id="service-dot"></span>
+        </header>
+
+        <main class="settings-content">
+            <div class="settings-intro">
+                <div class="settings-title">pilih cara akses</div>
+                <div class="settings-subtitle">service foreground mendukung link tiktok dan youtube. youtube akan memunculkan pilihan mp3 atau mp4.</div>
+            </div>
+
+            <button class="service-card" id="btn-mode-popup">
+                <div class="service-icon"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></div>
+                <div class="service-main">
+                    <div class="service-title">popup melayang</div>
+                    <div class="service-desc">bubble membuka input link. youtube otomatis punya dua tombol format.</div>
+                </div>
+                <div class="service-check" id="popup-check"><i class="fa-solid fa-check"></i></div>
+            </button>
+
+            <button class="service-card" id="btn-mode-notification">
+                <div class="service-icon"><i class="fa-solid fa-bell"></i></div>
+                <div class="service-main">
+                    <div class="service-title">notifikasi permanen</div>
+                    <div class="service-desc">tempel link dari remote input. kalau youtube terdeteksi, aksi mp3 dan mp4 muncul.</div>
+                </div>
+                <div class="service-check" id="notification-check"><i class="fa-solid fa-check"></i></div>
+            </button>
+
+            <button class="wide-btn danger-outline hidden" id="btn-stop-service"><i class="fa-solid fa-power-off"></i> matikan background service</button>
+
+            <div class="setting-group">
+                <div class="group-title">status izin</div>
+                <div class="info-row"><span><i class="fa-solid fa-window-maximize"></i> overlay</span><span id="overlay-status">belum dicek</span></div>
+                <div class="info-row"><span><i class="fa-solid fa-battery-half"></i> optimasi baterai</span><span id="battery-status">belum dicek</span></div>
+            </div>
+
+            <div class="setting-group">
+                <div class="group-title">supaya vivo lebih tahan di background</div>
+                <div class="vivo-note">aktifkan autostart, high background power usage, dan speedup whitelist/lock recent apps bila tersedia di funtouch os.</div>
+                <button class="wide-btn" id="btn-vivo-settings"><i class="fa-solid fa-shield-halved"></i> pengaturan background vivo</button>
+                <button class="wide-btn" id="btn-battery-settings"><i class="fa-solid fa-battery-quarter"></i> buka pengaturan baterai</button>
+                <button class="wide-btn" id="btn-app-settings"><i class="fa-solid fa-gear"></i> buka info aplikasi</button>
+                <button class="wide-btn" id="btn-overlay-settings"><i class="fa-solid fa-layer-group"></i> buka izin overlay</button>
+            </div>
+        </main>
+    </section>
+
+    <div id="youtube-format-modal" class="modal-backdrop hidden">
+        <div class="format-modal">
+            <div class="format-modal-icon"><i class="fa-brands fa-youtube"></i></div>
+            <div class="format-modal-title">youtube terdeteksi</div>
+            <div class="format-modal-subtitle" id="youtube-format-url">pilih format download</div>
+            <button class="format-option" id="btn-youtube-mp3"><span><i class="fa-solid fa-music"></i> mp3</span><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="format-option" id="btn-youtube-mp4"><span><i class="fa-solid fa-video"></i> mp4</span><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="format-cancel" id="btn-youtube-cancel">batal</button>
+        </div>
+    </div>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>
